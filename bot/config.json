@@ -1,0 +1,26 @@
+{
+    "telegram": {
+        "api_id": 21527283,
+        "api_hash": "babb877e16ab3f978bdfd5a88c5abc70",
+        "bot_token": "7579606423:AAE7qnjAVp6EOUTykEpD7eKe-7AUAZZ-02M",
+        "phone": "79939366352"
+    },
+    "channels": {
+        "source": [-1002404189771],
+        "target": [-4735415409]
+    },
+    "filters": {
+        "include": ["важно", "срочно", "кэшбек", "кэш"],
+        "exclude": ["спам", "реклама"]
+    },
+    "settings": {
+        "admins": [5304440647],
+        "rate_limit": {
+            "max_requests": 5,
+            "period_seconds": 60
+        },
+        "parse_interval": 60
+    },
+    "use_sources_file": true,
+    "sources_file": "sources.txt"
+} 
