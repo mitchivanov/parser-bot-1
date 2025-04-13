@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  parser:
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - ./logs:/app/logs
+      - ./sources.txt:/app/sources.txt
+    restart: unless-stopped 
