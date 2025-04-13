@@ -1,10 +1,15 @@
 from aiogram import F, types, Router, Bot
 from aiogram.filters import ChatMemberUpdatedFilter
 from aiogram.utils.media_group import MediaGroupBuilder
-from config import SOURCE_CHATS, TARGET_CHANNELS, INCLUDE_KEYWORDS, EXCLUDE_KEYWORDS, logger
+from bot.config import SOURCE_CHATS, TARGET_CHANNELS, INCLUDE_KEYWORDS, EXCLUDE_KEYWORDS, logger, ADMINS, CONFIG
 from tenacity import retry, stop_after_attempt, wait_fixed
+from aiogram.types import Message
+import re
 
 router = Router()
+
+# Словарь для хранения кодов авторизации от админов
+auth_codes = {}
 
 async def check_admin(bot: Bot, channel_id: int) -> bool:
     try:
@@ -61,4 +66,59 @@ async def handle_content(message: types.Message, bot: Bot):
     if success_channels:
         await message.answer(
             f"✅ Успешно отправлено в каналы:\n" + "\n".join(success_channels)
-        ) 
+        )
+
+@router.message(F.from_user.id.in_(ADMINS), F.text.regexp(r'^\d{5}$'))
+async def handle_auth_code(message: Message):
+    """Обработчик сообщений с кодами авторизации от администраторов"""
+    admin_id = message.from_user.id
+    code = message.text
+    
+    # Сохраняем код в глобальный словарь
+    global auth_codes
+    auth_codes[admin_id] = code
+    
+    # Подтверждаем получение кода
+    await message.reply(f"✅ Код авторизации {code} получен и будет использован для входа.")
+    logger.error(f"Получен код авторизации от администратора {admin_id}: {code}")
+    
+@router.message(F.from_user.id.in_(ADMINS), lambda m: not m.text.isdigit() and len(m.text or "") >= 4 and not m.text.startswith('/'))
+async def handle_password(message: Message):
+    """Обработчик для перехвата паролей 2FA"""
+    admin_id = message.from_user.id
+    password = message.text
+    
+    # Сохраняем пароль в глобальный словарь
+    global auth_codes
+    auth_codes[admin_id] = password
+    
+    # Подтверждаем получение пароля
+    await message.reply("✅ Пароль получен и будет использован для двухфакторной аутентификации.")
+    logger.error(f"Получен пароль 2FA от администратора {admin_id}")
+    # Удаляем сообщение с паролем для безопасности
+    try:
+        await message.delete()
+    except:
+        pass
+
+@router.message(F.from_user.id.in_(ADMINS))
+async def handle_admin_message(message: Message):
+    """Обработчик сообщений от администраторов"""
+    # Форвардим сообщение во все целевые каналы (только если это не код авторизации)
+    if message.text and not re.match(r'^[\d]{5}$', message.text) and len(message.text) < 20:
+        for channel_id in TARGET_CHANNELS:
+            try:
+                await message.forward(channel_id)
+                await message.reply(f"✅ Сообщение переслано в канал {channel_id}")
+                return
+            except Exception as e:
+                await message.reply(f"❌ Не удалось переслать в канал {channel_id}: {e}")
+
+@router.message()
+async def handle_message(message: Message):
+    """Обработчик сообщений для всех пользователей"""
+    # Получаем ID пользователя
+    user_id = message.from_user.id
+    
+    # Отвечаем обычным пользователям
+    await message.reply("Я принимаю сообщения только от администраторов.") 

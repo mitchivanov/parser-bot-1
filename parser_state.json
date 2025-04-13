@@ -1,0 +1,16 @@
+{
+  "last_message_ids": {
+    "-1002404189771": 16,
+    "https://t.me/+St2-cQONIA9lZjA6": 4611
+  },
+  "processed_albums": [],
+  "channel_activity": {},
+  "last_save": "2025-04-13T22:05:12.329294+00:00",
+  "last_error": null,
+  "stats": {
+    "messages_processed": 0,
+    "albums_processed": 0,
+    "errors_count": 0,
+    "start_time": "2025-04-13T22:04:58.882941+00:00"
+  }
+}

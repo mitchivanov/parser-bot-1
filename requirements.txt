@@ -1,6 +1,8 @@
-telethon
+telethon>=1.28.5
 cryptg
 pyOpenSSL
 backoff
 aiogram>=3.0.0
-python-dotenv 
+python-dotenv
+validators
+tenacity 

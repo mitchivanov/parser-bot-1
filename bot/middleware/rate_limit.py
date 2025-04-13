@@ -1,7 +1,7 @@
 from aiogram import BaseMiddleware
 from aiogram.types import Message
 from typing import Callable, Awaitable, Any
-from config import RATE_LIMIT, logger
+from bot.config import RATE_LIMIT, logger
 import time
 
 class RateLimitingMiddleware(BaseMiddleware):
