@@ -1,11 +1,12 @@
-version: '3.8'
+version: '3'
 
 services:
-  parser:
+  telegram-parser:
     build: .
     env_file:
       - .env
     volumes:
+      - ./data:/app/data
       - ./logs:/app/logs
-      - ./sources.txt:/app/sources.txt
-    restart: unless-stopped 
+      - ./temp_media:/app/temp_media
+    restart: always 

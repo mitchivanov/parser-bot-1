@@ -1,0 +1,33 @@
+2025-04-14 09:35:33 | INFO | ✅ Бот авторизован успешно
+2025-04-14 09:35:33 | INFO | Пользователь не авторизован. Пытаемся выполнить вход.
+2025-04-14 09:35:33 | INFO | ✅ Бот переподключен для авторизации
+2025-04-14 09:35:34 | ERROR | КРИТИЧЕСКИЙ СБОЙ АВТОРИЗАЦИИ: A wait of 47142 seconds is required (caused by SendCodeRequest)
+2025-04-14 09:35:34 | ERROR | A wait of 47142 seconds is required (caused by SendCodeRequest)
+Traceback (most recent call last):
+  File "/app/parser.py", line 355, in _handle_authentication
+    await self.user_client.send_code_request(Config.PHONE)
+  File "/usr/local/lib/python3.10/site-packages/telethon/client/auth.py", line 433, in send_code_request
+    result = await self(functions.auth.SendCodeRequest(
+  File "/usr/local/lib/python3.10/site-packages/telethon/client/users.py", line 30, in __call__
+    return await self._call(self._sender, request, ordered=ordered)
+  File "/usr/local/lib/python3.10/site-packages/telethon/client/users.py", line 83, in _call
+    result = await future
+telethon.errors.rpcerrorlist.FloodWaitError: A wait of 47142 seconds is required (caused by SendCodeRequest)
+2025-04-14 09:35:34 | ERROR | Попытка 1/2 провалена: A wait of 47142 seconds is required (caused by SendCodeRequest)
+2025-04-14 09:35:44 | INFO | ✅ Бот авторизован успешно
+2025-04-14 09:35:44 | INFO | Пользователь не авторизован. Пытаемся выполнить вход.
+2025-04-14 09:35:44 | INFO | ✅ Бот переподключен для авторизации
+2025-04-14 09:35:45 | ERROR | КРИТИЧЕСКИЙ СБОЙ АВТОРИЗАЦИИ: A wait of 47131 seconds is required (caused by SendCodeRequest)
+2025-04-14 09:35:45 | ERROR | A wait of 47131 seconds is required (caused by SendCodeRequest)
+Traceback (most recent call last):
+  File "/app/parser.py", line 355, in _handle_authentication
+    await self.user_client.send_code_request(Config.PHONE)
+  File "/usr/local/lib/python3.10/site-packages/telethon/client/auth.py", line 433, in send_code_request
+    result = await self(functions.auth.SendCodeRequest(
+  File "/usr/local/lib/python3.10/site-packages/telethon/client/users.py", line 30, in __call__
+    return await self._call(self._sender, request, ordered=ordered)
+  File "/usr/local/lib/python3.10/site-packages/telethon/client/users.py", line 83, in _call
+    result = await future
+telethon.errors.rpcerrorlist.FloodWaitError: A wait of 47131 seconds is required (caused by SendCodeRequest)
+2025-04-14 09:35:45 | ERROR | Попытка 2/2 провалена: A wait of 47131 seconds is required (caused by SendCodeRequest)
+2025-04-14 09:35:45 | CRITICAL | ❌ Достигнут лимит попыток. Аварийная остановка.

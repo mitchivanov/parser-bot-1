@@ -5,9 +5,9 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY *.py .env ./
+COPY sources.txt .
 
 VOLUME /app/logs
-VOLUME /app/sources.txt
 
 CMD ["python", "-u", "parser.py"] 

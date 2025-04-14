@@ -29,4 +29,14 @@ class BotLogger:
     def get_logger(self):
         return self.logger
 
-logger = BotLogger().get_logger() 
+logger = BotLogger().get_logger()
+
+# Добавляем обработку асинхронных исключений
+def log_async_errors(func):
+    async def wrapper(*args, **kwargs):
+        try:
+            return await func(*args, **kwargs)
+        except Exception as e:
+            logger.error(f"Async error: {str(e)}")
+            raise
+    return wrapper 
